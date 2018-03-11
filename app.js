@@ -107,44 +107,8 @@ const app = {
         this.players[this.currentPlayer][this.dartValue] = (this.players[this.currentPlayer][this.dartValue] + (this.targetValue * this.dartValue));
         let remainder = ((this.players[this.currentPlayer][this.dartValue]) - (this.dartValue * 3)); // Remainder of points to give to other players 
         
-        function updateView(dartValue, playerNum, playerDartScore) {
-            
-            let player = 0;
-
-            if (playerNum === 0) {
-                player = 1;
-            } else if (playerNum === 1) {
-                player = 2;
-            } else if (playerNum === 2) {
-                player = 4;
-            } else {
-                player = 5;
-            }
-
-            if (playerDartScore  >= (dartValue * 3)) {
-
-                $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').text('X');
-                $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').addClass('number-circle');
         
-            } else if (playerDartScore  === (dartValue * 2)) {
-        
-                $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').text('X');
-        
-            } else if (playerDartScore  === dartValue) {
-        
-                $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').text('/');
-        
-            } else {
-        
-                return;
-        
-            }
-
-            
-            
-        }
-        
-        updateView(this.dartValue, this.currentPlayer, this.players[this.currentPlayer][this.dartValue])
+        this.updateDartboardView(this.dartValue, this.currentPlayer, this.players[this.currentPlayer][this.dartValue]);
 
         console.log(remainder)
 
@@ -160,7 +124,7 @@ const app = {
                     
                     this.players[i]['score'] = ((this.players[i]['score']) + (remainder));
                     
-                    $("#player-" + (i + 1)).text(this.players[i]['score'])
+                    $("#player-" + (i + 1)).text(this.players[i]['score']) // Update Score View 
 
                 }
             } 
@@ -174,8 +138,42 @@ const app = {
 
     },
 
-    onDartScore() {
+    updateDartboardView(dartValue, playerNum, playerDartScore) {
+        let player = 0;
 
+        if (playerNum === 0) {
+            player = 1;
+        } else if (playerNum === 1) {
+            player = 2;
+        } else if (playerNum === 2) {
+            player = 4;
+        } else {
+            player = 5;
+        }
+
+        if (playerDartScore  >= (dartValue * 3)) {
+
+            $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').text('X');
+            $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').addClass('number-circle number-circle-blue');
+
+            
+    
+        } else if (playerDartScore  === (dartValue * 2)) {
+    
+            $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').text('X');
+    
+        } else if (playerDartScore  === dartValue) {
+    
+            $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').text('/');
+    
+        } else {
+    
+            return;
+    
+        } 
+    },
+
+    onDartScore() {
 
         this.throwsRemaining--;
         
@@ -198,7 +196,12 @@ const app = {
         }
 
         this.throwsRemaining = 2;
+        this.updateActivePlayerCSS();
 
+    },
+
+    updateActivePlayerCSS() {
+        
         for (let i = 1; i < 6; i++) {
             $('#player-box-' + i).removeClass('player-active'); // good
             $("table").find('th:nth-child(' + i + ')').removeClass('player-active-header');
@@ -209,10 +212,6 @@ const app = {
 
 
         $('#player-box-' + (this.currentPlayer + 1)).addClass('player-active') // good 
-        
-
-
-
 
         /*
 
@@ -239,7 +238,13 @@ const app = {
          $("table").find('td:nth-child(' + player + ')').addClass('player-active-board');
          $("table").find('tr:last-child td:nth-child(' + player + ')').addClass('border-bottom');
 
-      //   $("table").find('.number-circle').addClass('number-circle-blue') // almost working 
+      $("table").find('.number-circle').removeClass('number-circle-blue');
+
+      // current player
+      $("table").find('td:nth-child' + '(' + player + ')').find('.number-circle').addClass('number-circle-blue');
+
+
+
 
 
     },
@@ -259,10 +264,6 @@ const app = {
         }
         
         console.log(this.numberOfPlayers)
-    },
-
-    updateView() {
-        
     },
 
     goBack() {
@@ -285,17 +286,7 @@ const app = {
       // if playerONescore > total && playerTWoscore < playerONeScore
       // call this after each turn, can use player[turn] here too. 
     },
-    
-    updateView() {
-        // switch statement
-      // if current player player[turn][this.dartValue] < 20 && > 21 
-      // < dartValue && > (dartValue + 1)
-      // then change to 1 slash
-      // else else 
-      // $("#[dartValue]").innerText = one two or three
-    },
-    
-    // update view for how many throws player has left 
+
 
 
     goBack() {
