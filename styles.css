@@ -27,7 +27,7 @@ html {
 
 body {
   font-family: Mexcellent;
-  color: fb9b37;
+  color: #fb9b37;
   background: black;
   padding-top: 50px;
 }
@@ -39,10 +39,6 @@ h1 {
 .score {
   font-size: 140px;
   line-height: 120px;
-}
-
-.player-active {
-  color: #3dfdfd;
 }
 
 
@@ -59,6 +55,12 @@ div {
   border: 5px solid #FB9B37; 
   border-radius: 3px"
 }
+
+.player-active {
+  color: #3dfdfd;
+  border: 6px solid #3dfdfd;
+}
+
 
 table {
   border: 4px solid #FB9B37;
