@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <title>Darts.io</title>
+    </head>
+    <body class="">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="animate.css">
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3 player-box player-active" id="player-box-1">
+                    <h1>Player 1</h1>
+                    <p id="player-1" class="score">0</p>
+                </div>
+                <div class="col-xs-6 text-center">
+                    <img class="logo" src="images/logo.svg">
+                </div>
+                <div class="col-xs-3 player-box" id="player-box-2">
+                        <h1>Player 2</h1>
+                        <p id="player-2" class="score">0</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-3 player-box" id="player-box-3">
+                        <h1>Player 3</h1>
+                        <p id="player-3" class="score">0</p>
+                </div>
+                <div class="col-xs-6 text-center">
+                    <table style="width: 100%" id="tab">
+                        <tr>
+                            <th id="player-1-header">P1</th>
+                            <th id="player-2-header">P2</th>
+                            <th></th> 
+                            <th id="player-3-header">P3</th>
+                            <th id="player-4-header">P4</th>
+                        </tr>
+                        <tr id="20">
+                            <td><span></span></td>
+                            <td><span></span></td> 
+                            <td>20</td>
+                            <td><span></span></td>
+                            <td><span></span></td>
+                        </tr>
+                        <tr id="19">
+                            <td><span></span></td>
+                            <td><span></span></td> 
+                            <td>19</td>
+                            <td><span></span></td>
+                            <td><span></span></td>
+                        </tr>
+                        <tr id="18">
+                            <td><span></span></td>
+                            <td><span></span></td> 
+                            <td>18</td>
+                            <td><span></span></td>
+                            <td><span></span></td>
+                        </tr>
+                        <tr id="17">
+                            <td><span></span></td>
+                            <td><span></span></td> 
+                            <td>17</td>
+                            <td><span></span></td>
+                            <td><span></span></td>
+                        </tr>
+                        <tr id="16">
+                            <td><span></span></td>
+                            <td><span></span></td> 
+                            <td>16</td>
+                            <td><span></span></td>
+                            <td><span></span></td>
+                        </tr>
+                        <tr id="15">
+                            <td><span></span></td>
+                            <td><span></span></td> 
+                            <td>15</td>
+                            <td><span></span></td>
+                            <td><span></span></td>
+                        </tr>
+                        <tr id="bull">
+                            <td><span></span></td>
+                            <td><span></span></td> 
+                            <td>BULL</td>
+                            <td><span></span></td>
+                            <td><span></span></td>
+                        </tr>
+                    </table>
+                </div>               
+                <div class="col-xs-3 player-box" id="player-box-4">
+                        <h1>Player 4</h1>
+                        <p id="player-4" class="score">0</p>
+                </div>
+            </div>
+        </div>
+
+
+
+    </body>
+    <div class="controls">
+            <button class="btn btn-primary" id="twenty">20</button>
+            <button class="btn btn-primary" id="nineteen">19</button>
+            <button class="btn btn-small btn-primary" id="eighteen">18</button>
+            <button class="btn btn-small btn-primary" id="seventeen">17</button>
+            <button class="btn btn-small btn-primary" id="sixteen">16</button>
+            <button class="btn btn-small btn-primary" id="fifteen">15</button>
+            <button class="btn btn-small btn-primary" id="bull-button">BULL</button>
+            <br>
+            <button class="btn btn-small btn-primary" id="single"> Single</button>
+            <button class="btn btn-small btn-primary" id="double">double</button>
+            <button class="btn btn-small btn-primary" id="triple">triple</button>
+            <button class="btn btn-small btn-primary" id="miss">Miss</button>
+            <button class="btn btn-small btn-primary" id="playerSelection"># of Players</button>
+            <button class="btn btn-small btn-primary" id="playerSelection">Start</button>
+        </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="app.js"></script>
+    
+</html>
