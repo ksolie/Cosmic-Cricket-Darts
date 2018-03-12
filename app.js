@@ -1,20 +1,20 @@
 const app = {
     dartValue: null,
     targetValue: null,
-    numberOfPlayers: 4,
+    numberOfPlayers: 3,
     currentPlayer: 0,
     throwsRemaining: 2,
     targetValuePressed: false,
     players: [  
     {
-      20: 0,
-      19: 0,
-      18: 0,
-      17: 0,
-      16: 0,
-      15: 0,
-      bull: 0,
-      score: 0
+      20: 60,
+      19: 57,
+      18: 54,
+      17: 51,
+      16: 48,
+      15: 45,
+      25: 0,
+      score: 200
       
     },
       {
@@ -24,8 +24,8 @@ const app = {
       17: 0,
       16: 0,
       15: 0,
-      bull: 0,
-      score: 0
+      25: 0,
+      score: 100
     },
     {
       20: 0,
@@ -34,8 +34,8 @@ const app = {
       17: 0,
       16: 0,
       15: 0,
-      bull: 0,
-      score: 0
+      25: 0,
+      score: 50
     },
     {
       20: 0,
@@ -44,7 +44,7 @@ const app = {
       17: 0,
       16: 0,
       15: 0,
-      bull: 0,
+      25: 0,
       score: 0
     }], 
     
@@ -85,7 +85,11 @@ const app = {
     },
 
     onBull() {
-        console.log("hi")
+
+        if (this.targetValue === 3) {  // Prevents "triple" bullseye which isn't possible in game
+            return;
+        }
+
         this.dartValue = 25;
         this.doScoring();
     },
@@ -132,6 +136,8 @@ const app = {
 
         var audio = new Audio('./sounds/knob.ogg');
         audio.play();
+
+        this.checkWin();
 
         console.log(this.players)
         this.onDartScore();
@@ -243,10 +249,6 @@ const app = {
       // current player
       $("table").find('td:nth-child' + '(' + player + ')').find('.number-circle').addClass('number-circle-blue');
 
-
-
-
-
     },
 
     onDartMiss() {
@@ -282,17 +284,42 @@ const app = {
     },
 
     checkWin() {
-        // 21*3 + 20 * 3, whatever this total is...
-      // if playerONescore > total && playerTWoscore < playerONeScore
-      // call this after each turn, can use player[turn] here too. 
-    },
 
+        
 
+        let arrayOfScores = [];
 
-    goBack() {
-        // restore the array of player objects to previous values 
-        // have three snap shots, so you can go back up to 3 
-        // go back turns and/or previous player if needed 
+        for (var i = 0; i < this.numberOfPlayers; i++) {
+            if (i === this.currentPlayer) {
+            } else {
+                arrayOfScores.push(this.players[i]['score']);
+            }
+        }
+
+        // need to loop through players, not only check current player cuz other players can cause wins 
+
+        const allDartsClosed = ()  => {
+
+            
+         let total = Object.values(this.players[this.currentPlayer]).reduce((a, b) => a + b);
+
+         if (this.numberOfPlayers === 1 && total >= 390) {
+            console.log(`${this.currentPlayer} Wins!`);
+         }
+
+         let lowestScore = Math.min(...arrayOfScores);
+         console.log(lowestScore)
+
+         if (total >= 390 && this.players[this.currentPlayer]['score'] < lowestScore) {
+            console.log(`${this.currentPlayer} Wins!`);
+            $("#winner").text(`Player ${this.currentPlayer + 1} Wins!`);
+            $(".win-message").removeClass('hidden')
+
+         }
+        }
+
+        allDartsClosed();
+
     },
 
     setupInitialViewCSS() {
@@ -355,12 +382,6 @@ const app = {
 //   app.disableButtons();
 //   app.pickNumberOfPlayers();
 
-
-
-// send in dart for id selector
-// send in player for the child selector 
-
-// use switch statement for dart * 3 value compared to *1 , *2, *3 
-
-
+// after players picked
+// redefine funtions to do nothing 
 
