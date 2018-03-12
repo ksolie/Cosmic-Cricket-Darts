@@ -8,4 +8,4 @@ The logic covers every aspect for a full game experience including: scoring, aut
 
 Uses JavaScript Object Literal Pattern. 
 
-jQuery used for UI updates due to the tediousness of the heavy styling.   
+jQuery used for UI updates due to the tediousness of searching for DOM children. 
