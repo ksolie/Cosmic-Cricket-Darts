@@ -1,7 +1,7 @@
 const app = {
     dartValue: null,
     targetValue: null,
-    numberOfPlayers: 3,
+    numberOfPlayers: 1,
     currentPlayer: 0,
     throwsRemaining: 2,
     targetValuePressed: false,
@@ -285,7 +285,14 @@ const app = {
 
     checkWin() {
 
-        
+        let total = Object.values(this.players[this.currentPlayer]).reduce((a, b) => a + b); // need to omit 'score' property 
+
+        total = total - this.players[this.currentPlayer]['score'];
+
+        if (this.numberOfPlayers === 1 && total >= 390) {
+            console.log(`${this.currentPlayer} Wins!`);
+            return;
+         }
 
         let arrayOfScores = [];
 
@@ -296,16 +303,8 @@ const app = {
             }
         }
 
-        // need to loop through players, not only check current player cuz other players can cause wins 
 
-        const allDartsClosed = ()  => {
-
-            
-         let total = Object.values(this.players[this.currentPlayer]).reduce((a, b) => a + b);
-
-         if (this.numberOfPlayers === 1 && total >= 390) {
-            console.log(`${this.currentPlayer} Wins!`);
-         }
+        const allDartsClosed = ()  => {   
 
          let lowestScore = Math.min(...arrayOfScores);
          console.log(lowestScore)
