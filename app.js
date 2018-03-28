@@ -3,18 +3,18 @@ const app = {
     targetValue: null,
     numberOfPlayers: 1,
     currentPlayer: 0,
-    throwsRemaining: 2,
+    throwsRemaining: 3,
     targetValuePressed: false,
     gameStart: false,
     gameOver: false,
     players: [  
     {
-      20: 60,
-      19: 57,
-      18: 54,
-      17: 51,
-      16: 48,
-      15: 45,
+      20: 0,
+      19: 0,
+      18: 0,
+      17: 0,
+      16: 0,
+      15: 0,
       25: 0,
       score: 0
       
@@ -27,17 +27,7 @@ const app = {
       16: 0,
       15: 0,
       25: 0,
-      score: 100
-    },
-    {
-      20: 0,
-      19: 0,
-      18: 0,
-      17: 0,
-      16: 0,
-      15: 0,
-      25: 0,
-      score: 50
+      score: 0
     },
     {
       20: 0,
@@ -48,7 +38,19 @@ const app = {
       15: 0,
       25: 0,
       score: 0
-    }], 
+    },
+    {
+      20: 0,
+      19: 0,
+      18: 0,
+      17: 0,
+      16: 0,
+      15: 0,
+      25: 0,
+      score: 0
+    }],
+    
+    previousScores: [], // For "undo" button
     
     onTwenty() {
 
@@ -147,7 +149,7 @@ const app = {
         
         this.updateDartboardView(this.dartValue, this.currentPlayer, this.players[this.currentPlayer][this.dartValue]);
 
-        console.log(remainder)
+        console.log(`Remainder: ${remainder}`)
 
         if (remainder > 0) {
             this.players[this.currentPlayer][this.dartValue] = (this.dartValue * 3); // Reset the current player's dart value to maximum
@@ -207,11 +209,17 @@ const app = {
         } else if (playerDartScore  === (dartValue * 2)) {
     
             $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').text('X');
+            $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').removeClass('number-circle number-circle-blue');
     
         } else if (playerDartScore  === dartValue) {
     
             $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').text('/');
+            $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').removeClass('number-circle number-circle-blue');
     
+        } else if (playerDartScore === 0) {
+            $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').text('');
+            $("#" + dartValue).find('td:nth-child' + '(' + player + ')').find('span').removeClass('number-circle number-circle-blue');
+            
         } else {
     
             return;
@@ -223,7 +231,7 @@ const app = {
 
         this.throwsRemaining--;
         
-        if (this.throwsRemaining < 0) {
+        if (this.throwsRemaining < 1) {
             this.nextPlayer();
         }
         this.targetValuePressed = false;
@@ -241,7 +249,7 @@ const app = {
             this.currentPlayer++;
         }
 
-        this.throwsRemaining = 2;
+        this.throwsRemaining = 3;
         this.updateActivePlayerCSS();
 
     },
@@ -356,7 +364,7 @@ const app = {
 
         if (!this.gameStart) {
        
-            if (this.numberOfPlayers === 4) {
+            if (this.numberOfPlayers >= 4) {
                 this.numberOfPlayers = 1;
             } else {
                 this.numberOfPlayers++
@@ -366,6 +374,30 @@ const app = {
             console.log(this.numberOfPlayers)
         }
 
+    },
+
+    onUndo() {
+        console.log('undo')
+        let pastTurns = [];
+
+        this.throwsRemaining++;
+        if(this.throwsRemaining > 3) {
+            this.currentPlayer--; 
+            if (this.currentPlayer < 0) {
+                this.currentPlayer = (this.numberOfPlayers - 1); // Once again, should have had an empty object to occupy player object at index 0 to avoid confusing logic.
+            }
+            this.throwsRemaining = 1;
+        }
+
+        
+        // reload scores here
+
+
+      this.updateDartboardView(this.dartValue, this.currentPlayer, this.players[this.currentPlayer][this.dartValue]);
+      this.updateActivePlayerCSS();
+
+        console.log(this.currentPlayer);
+        console.log(this.throwsRemaining);
     },
 
     startGame() {
@@ -378,6 +410,9 @@ const app = {
             location.reload();                 // We'll just reset the JavaScript - maybe not elegant but a great solution 
 
         }
+
+        console.log('game started')
+        console.log(this.numberOfPlayers)
     },
 
     setupInitialViewCSS() {
@@ -403,6 +438,7 @@ const app = {
         this.miss = document.getElementById("miss");
         this.playerSelection = document.getElementById("playerSelection");
         this.onStartGame = document.getElementById("start-game-button");
+        this.undo = document.getElementById("undo-button");
     },
   
     bindEvents() {
@@ -421,6 +457,7 @@ const app = {
         this.miss.onclick = this.onDartMiss.bind(this);
         this.playerSelection.onclick = this.pickNumberOfPlayers.bind(this);
         this.onStartGame.onclick = this.startGame.bind(this);
+        this.undo.onclick = this.onUndo.bind(this);
     },
   
     init() {
