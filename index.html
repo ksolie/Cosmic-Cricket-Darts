@@ -9,7 +9,7 @@
 
 
         <!-- Player Select Modal -->
-        <div class="player-select">
+        <div class="player-select hidden">
             <img src="images/logo.svg" style="width: 400px; padding-top: 50px;" class="center-block text-align">
             <h2>Select Number of Players</h2>
             <h1 class="player-select-num">1</h1>
@@ -20,6 +20,7 @@
                 <img src="images/logo.svg" style="width: 300px; padding-top: 50px;" class="center-block text-align">
                 <p id="winner">Game Over</p>
                 <h2>Press start for a new game</h2>
+                
         </div>
 
 
@@ -40,10 +41,18 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-3 player-box" id="player-box-3">
+                <div class="col-xs-3" style="padding: 0;">
+                    <div class="player-box" id="player-box-3">
                         <h1>Player 3</h1>
                         <p id="player-3" class="score">0</p>
+                    </div>
+                    <ul class="previous-throw">
+                        <li>Triple 20</li>
+                        <li>Miss</li>
+                        <li>Single 17</li>
+                    </ul>
                 </div>
+                
                 <div class="col-xs-6 text-center">
                     <table style="width: 100%" id="tab">
                         <tr>
@@ -109,6 +118,7 @@
                         <p id="player-4" class="score">0</p>
                 </div>
             </div>
+
 
             <div class="controls">
                 <button class="btn btn-primary" id="twenty">20</button>

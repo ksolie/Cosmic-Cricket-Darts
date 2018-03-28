@@ -144,6 +144,15 @@ img {
   }
 }
 
+.previous-throw {
+  position: relative;
+  left: 30px;
+  margin-top: 75px;
+  color: white;
+  font-size: 46px;
+  text-align: left;
+  list-style-type: none;
+}
 
 .player-select {
   position: absolute;

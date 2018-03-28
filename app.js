@@ -296,6 +296,15 @@ const app = {
         // once it reaches 5, start removing the first item in the array after pushing on the new item
         // they will just be objects with "snapshots" of the game information 
         // if you go back, just replace the score values, current player value, throws left value
+
+        // Call this.updateDartboardView();
+        // Pass in "snapshot" of game 
+
+        // update player turn, # of darts thrown, all player scores, 
+        // UI: scores, closed out, last darts thrown, player turn 
+        // if I coded it good enough, I should just be able to run functions to do all this
+
+        // It's like i'm doing memory management 
     },
 
 
