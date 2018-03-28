@@ -7,12 +7,23 @@
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="animate.css">
 
+
+        <!-- Player Select Modal -->
+        <div class="player-select">
+            <img src="images/logo.svg" style="width: 400px; padding-top: 50px;" class="center-block text-align">
+            <h2>Select Number of Players</h2>
+            <h1 class="player-select-num">1</h1>
+        </div>
+
+        <!-- Win Modal -->
         <div class="win-message hidden">
                 <img src="images/logo.svg" style="width: 300px; padding-top: 50px;" class="center-block text-align">
-                <p id="winner"></p>
+                <p id="winner">Game Over</p>
                 <h2>Press start for a new game</h2>
         </div>
 
+
+        <!-- Dartboard -->
         <div class="container">
             <div class="row">
                 <div class="col-xs-3 player-box player-active" id="player-box-1">
@@ -113,7 +124,7 @@
                 <button class="btn btn-small btn-primary" id="triple">triple</button>
                 <button class="btn btn-small btn-primary" id="miss">Miss</button>
                 <button class="btn btn-small btn-primary" id="playerSelection"># of Players</button>
-                <button class="btn btn-small btn-primary" id="playerSelection">Start</button>
+                <button class="btn btn-small btn-primary" id="start-game-button">Start</button>
             </div>
 
 

@@ -5,6 +5,8 @@ const app = {
     currentPlayer: 0,
     throwsRemaining: 2,
     targetValuePressed: false,
+    gameStart: false,
+    gameOver: false,
     players: [  
     {
       20: 60,
@@ -14,7 +16,7 @@ const app = {
       16: 48,
       15: 45,
       25: 0,
-      score: 200
+      score: 0
       
     },
       {
@@ -50,7 +52,9 @@ const app = {
     
     onTwenty() {
 
-   
+        if (!this.targetValuePressed) {
+            return;
+        }
         this.dartValue = 20;
         this.doScoring();
       // counter goes up, once it hits 3, reset to zero and switch player 
@@ -61,32 +65,49 @@ const app = {
       
     },
     onNineteen() {
+        if (!this.targetValuePressed) {
+            return;
+        }
         this.dartValue = 19;
         this.doScoring();
+        
     },
     onEighteen() {
+        if (!this.targetValuePressed) {
+            return;
+        }
         this.dartValue = 18;
         this.doScoring();
     },
 
     onSeventeen() {
+        if (!this.targetValuePressed) {
+            return;
+        }
         this.dartValue = 17;
         this.doScoring();
     },
 
     onSixteen() {
+        if (!this.targetValuePressed) {
+            return;
+        }
         this.dartValue = 16;
         this.doScoring();
     },
 
     onFifteen() {
+        if (!this.targetValuePressed) {
+            return;
+        }
         this.dartValue = 15;
         this.doScoring();
     },
 
     onBull() {
 
-        if (this.targetValue === 3) {  // Prevents "triple" bullseye which isn't possible in game
+        if (this.targetValue === 3 || !this.targetValuePressed) {  // Prevents "triple" bullseye which isn't possible in game
+            this.targetValuePressed = false;
             return;
         }
 
@@ -95,15 +116,27 @@ const app = {
     },
   
     onSingle() {
+        if (!this.gameStart) {
+            return;
+        }
         this.targetValue = 1;
+        this.targetValuePressed = true;
     },
   
     onDouble() {
+        if (!this.gameStart) {
+            return;
+        }
         this.targetValue = 2;
+        this.targetValuePressed = true;
     },
   
     onTriple() {
+        if (!this.gameStart) {
+            return;
+        }
         this.targetValue = 3;
+        this.targetValuePressed = true;
     },
     
     
@@ -117,7 +150,7 @@ const app = {
         console.log(remainder)
 
         if (remainder > 0) {
-            this.players[this.currentPlayer][this.dartValue] = (this.dartValue * 3); // Reset the current player's dart value to maxium
+            this.players[this.currentPlayer][this.dartValue] = (this.dartValue * 3); // Reset the current player's dart value to maximum
             
 
             // Point other players 
@@ -146,6 +179,13 @@ const app = {
 
     updateDartboardView(dartValue, playerNum, playerDartScore) {
         let player = 0;
+
+                                                                                                                    /*
+        This extra logic at the top here is chunky... but necessary. 
+        The problem here is our array of players starts at 0, and the child elements to target start with 1.
+        We also need to skip the 3rd child element since that is the column of numbers. 
+        In hindsight, it would have been better to create an empty object in the players array to occupy index 0. 
+                                                                                                                    */
 
         if (playerNum === 0) {
             player = 1;
@@ -186,6 +226,7 @@ const app = {
         if (this.throwsRemaining < 0) {
             this.nextPlayer();
         }
+        this.targetValuePressed = false;
     },
     
     nextPlayer() {
@@ -196,8 +237,7 @@ const app = {
 
         if (this.currentPlayer === (this.numberOfPlayers - 1)) {
             this.currentPlayer = 0;
-        }
-        else {
+        } else {
             this.currentPlayer++;
         }
 
@@ -216,17 +256,7 @@ const app = {
 
         } 
 
-
         $('#player-box-' + (this.currentPlayer + 1)).addClass('player-active') // good 
-
-        /*
-
-        This extra logic at the top here is chunky... but necessary. 
-        The problem here is our array of players starts at 0, and the child elements to target start with 1.
-        We also need to skip the 3rd child element since that is the column of numbers. 
-        In hindsight, it would have been better to create an empty object in the players array to occupy index 0. 
-
-        */
 
         let player = this.currentPlayer 
 
@@ -252,21 +282,14 @@ const app = {
     },
 
     onDartMiss() {
+        if (!this.gameStart) {
+            return;
+        }
         var audio = new Audio('./sounds/miss.ogg');
         audio.play();
         this.onDartScore();
     },
 
-    pickNumberOfPlayers() {
-       
-        if (this.numberOfPlayers === 4) {
-            this.numberOfPlayers = 1;
-        } else {
-            this.numberOfPlayers++
-        }
-        
-        console.log(this.numberOfPlayers)
-    },
 
     goBack() {
         // create an array that you push to, probably 5 long. 
@@ -275,22 +298,20 @@ const app = {
         // if you go back, just replace the score values, current player value, throws left value
     },
 
-    disableButtons() {
-        this.pickNumberOfPlayers = function() {
-            console.log("does notnhing");
-        }
 
-        this.pickNumberOfPlayers();
-    },
 
     checkWin() {
 
-        let total = Object.values(this.players[this.currentPlayer]).reduce((a, b) => a + b); // need to omit 'score' property 
+        let total = Object.values(this.players[this.currentPlayer]).reduce((a, b) => a + b); 
 
-        total = total - this.players[this.currentPlayer]['score'];
+        total = total - this.players[this.currentPlayer]['score']; // need to omit 'score' property from total
 
+
+        // If only 1 player 
         if (this.numberOfPlayers === 1 && total >= 390) {
             console.log(`${this.currentPlayer} Wins!`);
+            $('.win-message').removeClass('hidden');
+            this.gameOver = true;
             return;
          }
 
@@ -313,12 +334,41 @@ const app = {
             console.log(`${this.currentPlayer} Wins!`);
             $("#winner").text(`Player ${this.currentPlayer + 1} Wins!`);
             $(".win-message").removeClass('hidden')
+            this.gameOver = true;
 
          }
         }
 
         allDartsClosed();
 
+    },
+
+    pickNumberOfPlayers() {
+
+        if (!this.gameStart) {
+       
+            if (this.numberOfPlayers === 4) {
+                this.numberOfPlayers = 1;
+            } else {
+                this.numberOfPlayers++
+            }
+            
+            $('.player-select-num').text(this.numberOfPlayers);
+            console.log(this.numberOfPlayers)
+        }
+
+    },
+
+    startGame() {
+        if (!this.gameStart) {
+            $(".player-select").addClass('hidden');
+            this.gameStart = true;
+        }
+
+        if (this.gameStart && this.gameOver) {
+            location.reload();                 // We'll just reset the JavaScript - maybe not elegant but a great solution 
+
+        }
     },
 
     setupInitialViewCSS() {
@@ -343,10 +393,11 @@ const app = {
 
         this.miss = document.getElementById("miss");
         this.playerSelection = document.getElementById("playerSelection");
+        this.onStartGame = document.getElementById("start-game-button");
     },
   
     bindEvents() {
-        this.twenty.onclick = this.onTwenty.bind(this);
+        this.twenty.onclick = this.onTwenty.bind(this);     // Need to bind because we lose context of 'this' with click handler 
         this.nineteen.onclick = this.onNineteen.bind(this);
         this.eighteen.onclick = this.onEighteen.bind(this);
         this.seventeen.onclick = this.onSeventeen.bind(this);
@@ -360,6 +411,7 @@ const app = {
 
         this.miss.onclick = this.onDartMiss.bind(this);
         this.playerSelection.onclick = this.pickNumberOfPlayers.bind(this);
+        this.onStartGame.onclick = this.startGame.bind(this);
     },
   
     init() {

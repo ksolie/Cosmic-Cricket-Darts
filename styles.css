@@ -144,13 +144,33 @@ img {
   }
 }
 
+
+.player-select {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  border: 4px solid #3dfdfd;
+  background: rgba(0, 0, 0, 1);
+
+}
+
+.player-select h2 {
+  margin-top: 50px;
+}
+
+.player-select-num {
+  font-size: 208px;
+  color: #3dfdfd;
+}
+
 .win-message {
   position: absolute;
   width: 100%;
   height: 100%;
   z-index: 2;
   border: 4px solid #3dfdfd;
-  background: rgba(0, 0, 0, .8);
+  background: rgba(0, 0, 0, 1);
   
 }
 
