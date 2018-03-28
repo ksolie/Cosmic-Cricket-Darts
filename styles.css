@@ -128,6 +128,14 @@ table tr th:nth-child(2),  {
   border-bottom: 5px solid #3dfdfd;
 }
 
+.previous-throw-info td {
+  color: white;
+  font-size: 40px
+}
+
+.previous-throw-info td {
+  border-color: #FB9B37;
+}
 
 img {
   animation: flicker 2s linear;
@@ -144,15 +152,6 @@ img {
   }
 }
 
-.previous-throw {
-  position: relative;
-  left: 30px;
-  margin-top: 75px;
-  color: white;
-  font-size: 46px;
-  text-align: left;
-  list-style-type: none;
-}
 
 .player-select {
   position: absolute;
