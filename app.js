@@ -483,9 +483,63 @@ const app = {
     },
 
     keyBoardEvents(e) {
-        console.log('key up')
-        if (e.keyCode == 84) {
-            this.onTriple();
+        switch(e.keyCode) {
+            case 98: 
+                console.log('2 key pressed') // twenty
+                this.onTwenty();
+                break;
+            case 105: 
+                console.log('9 key pressed') // nineteen
+                this.onNineteen();
+                break;
+            case 104: 
+                console.log('8 key pressed') // eighteen 
+                this.onEighteen();
+                break;
+            case 103: 
+                console.log('7 key pressed') // seventeen
+                this.onSeventeen();
+                break;
+            case 102: 
+                console.log('6 key pressed') // sixteen
+                this.onSixteen();
+                break;
+            case 101: 
+                console.log('5 key pressed') // fifteen
+                this.onFifteen(); 
+                break;
+            case 66:
+                console.log('B key pressed') // bullseye
+                this.onBull();
+                break;
+            case 84:
+                console.log('T key pressed'); // triple
+                this.onTriple();
+                break;
+            case 68:
+                console.log('D key pressed'); // double 
+                this.onDouble();
+                break;
+            case 83:
+                console.log('S key pressed'); // single
+                this.onSingle(); 
+                break;
+            case 80:
+                console.log('P key pressed') // # of players select
+                this.pickNumberOfPlayers();
+                break;
+            case 77:
+                console.log('M key pressed') // miss
+                this.onDartMiss();
+                break;
+            case 85: 
+                console.log('U key pressed') // undo
+                this.onUndoModal();
+                break;
+            case 89:
+                console.log('Y key pressed') // start 
+                this.playGame();
+                break;
         }
     },
   
@@ -513,6 +567,11 @@ const app = {
 
         document.body.onkeyup = this.keyBoardEvents.bind(this); // Need to bind to the app object otherwise 'this' will point to the DOM
 
+
+        /* 
+        The following were uesd for onscreen controls while deving without the physical buttons
+        Keeping them here for debugging purposes 
+
         this.twenty.onclick = this.onTwenty.bind(this);     
         this.nineteen.onclick = this.onNineteen.bind(this);
         this.eighteen.onclick = this.onEighteen.bind(this);
@@ -529,13 +588,11 @@ const app = {
         this.playerSelection.onclick = this.pickNumberOfPlayers.bind(this);
         this.onPlayGame.onclick = this.playGame.bind(this);
         this.undo.onclick = this.onUndoModal.bind(this);
-
+        */
 
     },
   
     init() {
-
-  
       this.cacheDOM();
       this.bindEvents();
       this.setupInitialViewCSS();
@@ -545,10 +602,4 @@ const app = {
   
   app.init();
   
-//   app.pickNumberOfPlayers();
-//   app.disableButtons();
-//   app.pickNumberOfPlayers();
-
-// after players picked
-// redefine funtions to do nothing 
 

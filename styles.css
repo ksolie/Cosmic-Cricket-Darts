@@ -11,7 +11,6 @@ button {
 }
 
 
-
 @font-face {font-family: "Mexcellent";
   src: 
     url("https://db.onlinewebfonts.com/t/c8e08d8af275a2577388127977ac638f.eot"),
@@ -151,8 +150,6 @@ table tr th:nth-child(2),  {
     opacity: .15;
   }
 }
-
-
 
 
 .player-select h2 {
