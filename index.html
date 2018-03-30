@@ -17,10 +17,19 @@
 
         <!-- Win Modal -->
         <div class="win-message hidden">
-                <img src="images/logo.svg" style="width: 300px; padding-top: 50px;" class="center-block text-align">
+                <img src="images/logo.svg" style="width: 400px; padding-top: 50px;" class="center-block text-align">
                 <p id="winner">Game Over</p>
-                <h2>Press start for a new game</h2>
-                
+                <h2>Press Play for a new game</h2>
+        </div>
+
+
+        <!-- Undo Modal -->
+        <div class="undo-modal hidden">
+            <img src="images/logo.svg" style="width: 400px; padding-top: 50px;" class="center-block text-align">
+            <div class="undo-content">
+                <h2>Press <span class="bright-color">Undo</span> to reset last turn</h2>
+                <h2>Press <span class="bright-color">Play</span> to cancel and resume</h2>
+            </div>
         </div>
 
 
@@ -45,6 +54,10 @@
                     <div class="player-box" id="player-box-3">
                         <h1>Player 3</h1>
                         <p id="player-3" class="score">0</p>
+                    </div>
+                    <div class="stats">
+                        <h3>Throws Remaining</h3>
+                        <h2 id="throws-left">3</h2>
                     </div>
                 </div>
                 
@@ -120,6 +133,8 @@
             </div>
 
 
+            <!-- Only used for development, keep around for debugging
+                
             <div class="controls">
                 <button class="btn btn-primary" id="twenty">20</button>
                 <button class="btn btn-primary" id="nineteen">19</button>
@@ -134,9 +149,11 @@
                 <button class="btn btn-small btn-primary" id="triple">triple</button>
                 <button class="btn btn-small btn-primary" id="miss">Miss</button>
                 <button class="btn btn-small btn-primary" id="playerSelection"># of Players</button>
-                <button class="btn btn-small btn-primary" id="start-game-button">Start</button>
+                <button class="btn btn-small btn-primary" id="play-game-button">Play</button>
                 <button class="btn btn-small btn-primary" id="undo-button">Undo</button>
-            </div>
+            </div> 
+        
+            -->
 
 
         </div>

@@ -11,7 +11,6 @@ button {
 }
 
 
-
 @font-face {font-family: "Mexcellent";
   src: 
     url("https://db.onlinewebfonts.com/t/c8e08d8af275a2577388127977ac638f.eot"),
@@ -153,16 +152,6 @@ table tr th:nth-child(2),  {
 }
 
 
-.player-select {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  border: 4px solid #3dfdfd;
-  background: rgba(0, 0, 0, 1);
-
-}
-
 .player-select h2 {
   margin-top: 50px;
 }
@@ -172,14 +161,21 @@ table tr th:nth-child(2),  {
   color: #3dfdfd;
 }
 
-.win-message {
+.win-message, .undo-modal, .player-select {
   position: absolute;
   width: 100%;
   height: 100%;
   z-index: 2;
   border: 4px solid #3dfdfd;
   background: rgba(0, 0, 0, 1);
-  
+}
+
+.undo-content {
+  margin-top: 50px;
+}
+
+.bright-color {
+  color: #3dfdfd;
 }
 
 h2 {
@@ -193,4 +189,16 @@ h2 {
 #winner {
   font-size: 120px;
   color: #3dfdfd;
+}
+
+.stats h3 {
+  margin-top: 60px;
+  color: white;
+  font-size: 60px;
+}
+
+.stats h2 {
+  font-size: 80px;
+  color: #3dfdfd;
+  margin: 0;
 }

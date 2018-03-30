@@ -7,6 +7,7 @@ const app = {
     targetValuePressed: false,
     gameStart: false,
     gameOver: false,
+    undoModalOpen: false,
     players: [  
     {
       20: 0,
@@ -255,6 +256,7 @@ const app = {
         console.log(this.previousScores)
         console.log(this.dartValue);
         console.log(this.previousDartThrown);
+        $("#throws-left").text(this.throwsRemaining);
     },
     
     nextPlayer() {
@@ -318,6 +320,8 @@ const app = {
         
         this.previousDartThrown.push('miss');
         this.onDartScore();
+
+        $("#throws-left").text(this.throwsRemaining);
     },
 
 
@@ -380,7 +384,20 @@ const app = {
 
     },
 
-    onUndo() {
+    onUndoModal() {
+        if (!this.undoModalOpen) {
+            $(".undo-modal").removeClass('hidden'); // if not open, open it 
+            this.undoModalOpen = true;
+        }
+        
+        else {
+            this.onUndoConfirm();
+            $(".undo-modal").addClass('hidden'); // close after confirming 
+            this.undoModalOpen = false;
+        }
+    },
+
+    onUndoConfirm() {
         console.log('undo')
         let pastTurns = [];
 
@@ -393,6 +410,7 @@ const app = {
             this.throwsRemaining = 1;
         }
 
+        $("#throws-left").text(this.throwsRemaining);
         
         // reload scores here
 
@@ -429,27 +447,32 @@ const app = {
       }
     },
 
-    startGame() {
+    playGame() {
         if (!this.gameStart) {
             $(".player-select").addClass('hidden');
             this.gameStart = true;
+            this.previousScores.push(JSON.stringify(this.players)); // Start keeping track of previous scores for 'undo' feature
+
+            $('#main-logo').addClass("flicker");
+            setTimeout(() => {
+                var audio = new Audio('./sounds/sizzle.wav');
+                audio.play(); 
+            }, 250)
+            console.log('game started')
+            console.log(this.numberOfPlayers)
         }
 
         if (this.gameStart && this.gameOver) {
-            location.reload();                 // We'll just reset the JavaScript - maybe not elegant but a great solution 
-
+            location.reload();                 // We'll just reset the JavaScript - maybe not elegant but a perfectly fine solution 
         }
 
-        console.log('game started')
-        console.log(this.numberOfPlayers)
+        if (this.gameStart && this.undoModalOpen) {
+            $(".undo-modal").addClass('hidden'); // close after canceling 'undo'
+            this.undoModalOpen = false;
+        }
+     
 
-        this.previousScores.push(JSON.stringify(this.players));
 
-        $('#main-logo').addClass("flicker");
-        setTimeout(() => {
-            var audio = new Audio('./sounds/sizzle.wav');
-            audio.play(); 
-        }, 250)
     },
 
     setupInitialViewCSS() {
@@ -457,6 +480,67 @@ const app = {
         $("table").find('td:nth-child(1)').addClass('player-active-board');
         $("table").find('tr:last-child td:nth-child(1)').addClass('border-bottom');
         
+    },
+
+    keyBoardEvents(e) {
+        switch(e.keyCode) {
+            case 98: 
+                console.log('2 key pressed') // twenty
+                this.onTwenty();
+                break;
+            case 105: 
+                console.log('9 key pressed') // nineteen
+                this.onNineteen();
+                break;
+            case 104: 
+                console.log('8 key pressed') // eighteen 
+                this.onEighteen();
+                break;
+            case 103: 
+                console.log('7 key pressed') // seventeen
+                this.onSeventeen();
+                break;
+            case 102: 
+                console.log('6 key pressed') // sixteen
+                this.onSixteen();
+                break;
+            case 101: 
+                console.log('5 key pressed') // fifteen
+                this.onFifteen(); 
+                break;
+            case 66:
+                console.log('B key pressed') // bullseye
+                this.onBull();
+                break;
+            case 84:
+                console.log('T key pressed'); // triple
+                this.onTriple();
+                break;
+            case 68:
+                console.log('D key pressed'); // double 
+                this.onDouble();
+                break;
+            case 83:
+                console.log('S key pressed'); // single
+                this.onSingle(); 
+                break;
+            case 80:
+                console.log('P key pressed') // # of players select
+                this.pickNumberOfPlayers();
+                break;
+            case 77:
+                console.log('M key pressed') // miss
+                this.onDartMiss();
+                break;
+            case 85: 
+                console.log('U key pressed') // undo
+                this.onUndoModal();
+                break;
+            case 89:
+                console.log('Y key pressed') // start 
+                this.playGame();
+                break;
+        }
     },
   
     cacheDOM() {
@@ -474,12 +558,21 @@ const app = {
 
         this.miss = document.getElementById("miss");
         this.playerSelection = document.getElementById("playerSelection");
-        this.onStartGame = document.getElementById("start-game-button");
+        this.onPlayGame = document.getElementById("play-game-button");
         this.undo = document.getElementById("undo-button");
+
     },
   
     bindEvents() {
-        this.twenty.onclick = this.onTwenty.bind(this);     // Need to bind because we lose context of 'this' with click handler 
+
+        document.body.onkeyup = this.keyBoardEvents.bind(this); // Need to bind to the app object otherwise 'this' will point to the DOM
+
+
+        /* 
+        The following were uesd for onscreen controls while deving without the physical buttons
+        Keeping them here for debugging purposes 
+
+        this.twenty.onclick = this.onTwenty.bind(this);     
         this.nineteen.onclick = this.onNineteen.bind(this);
         this.eighteen.onclick = this.onEighteen.bind(this);
         this.seventeen.onclick = this.onSeventeen.bind(this);
@@ -493,13 +586,13 @@ const app = {
 
         this.miss.onclick = this.onDartMiss.bind(this);
         this.playerSelection.onclick = this.pickNumberOfPlayers.bind(this);
-        this.onStartGame.onclick = this.startGame.bind(this);
-        this.undo.onclick = this.onUndo.bind(this);
+        this.onPlayGame.onclick = this.playGame.bind(this);
+        this.undo.onclick = this.onUndoModal.bind(this);
+        */
+
     },
   
     init() {
-
-  
       this.cacheDOM();
       this.bindEvents();
       this.setupInitialViewCSS();
@@ -509,10 +602,4 @@ const app = {
   
   app.init();
   
-//   app.pickNumberOfPlayers();
-//   app.disableButtons();
-//   app.pickNumberOfPlayers();
-
-// after players picked
-// redefine funtions to do nothing 
 
