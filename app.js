@@ -51,6 +51,7 @@ const app = {
     }],
     
     previousScores: [], // For "undo" button
+    previousDartThrown: [],
     
     onTwenty() {
 
@@ -164,6 +165,7 @@ const app = {
                     this.players[i]['score'] = ((this.players[i]['score']) + (remainder));
                     
                     $("#player-" + (i + 1)).text(this.players[i]['score']) // Update Score View 
+                    this.updateScoreView();
 
                 }
             } 
@@ -175,9 +177,17 @@ const app = {
         this.checkWin();
 
         console.log(this.players)
+
+        this.previousDartThrown.push(this.dartValue);
         this.onDartScore();
 
     },
+
+    updateScoreView() {
+        for (let i = 0; i < this.numberOfPlayers; i++) {        
+            $("#player-" + (i + 1)).text(this.players[i]['score']) // Update Score View 
+        }
+    }, 
 
     updateDartboardView(dartValue, playerNum, playerDartScore) {
         let player = 0;
@@ -241,7 +251,10 @@ const app = {
 
         let currentGameStats = JSON.stringify(this.players);
         this.previousScores.push(currentGameStats);
+
         console.log(this.previousScores)
+        console.log(this.dartValue);
+        console.log(this.previousDartThrown);
     },
     
     nextPlayer() {
@@ -302,6 +315,8 @@ const app = {
         }
         var audio = new Audio('./sounds/miss.ogg');
         audio.play();
+        
+        this.previousDartThrown.push('miss');
         this.onDartScore();
     },
 
@@ -383,20 +398,35 @@ const app = {
 
 
       this.players = JSON.parse(this.previousScores[(this.previousScores.length - 2)]);
+      console.log("Current Player Array Scores:")
       console.log(this.players)
       this.previousScores.splice(-1,1) // very important to remove from array 
-      console.log(this.previousScores)
-      console.log(this.players)
+      console.log(this.previousDartThrown)
+
 
       // need to update the scores UI
       // need to keep track of previous dart value in array as well, slice it as well. 
       // for a miss, we'll avoid all of this
 
-      this.updateDartboardView(this.dartValue, this.currentPlayer, this.players[this.currentPlayer][this.dartValue]);
-      this.updateActivePlayerCSS();
+      let lastDartValue = this.previousDartThrown[(this.previousDartThrown.length - 1)];
+      console.log(`last dart value is: ${lastDartValue}`)
+      this.previousDartThrown.splice(-1, 1);
+        console.log(this.previousDartThrown)
+        this.updateActivePlayerCSS();
 
-        console.log(this.currentPlayer);
-        console.log(this.throwsRemaining);
+
+      if (lastDartValue != 'miss') {
+        
+        
+        this.updateDartboardView(lastDartValue, this.currentPlayer, this.players[this.currentPlayer][lastDartValue]);
+        this.updateActivePlayerCSS();
+        this.updateScoreView();
+
+        
+
+            console.log(this.currentPlayer);
+            console.log(this.throwsRemaining);
+      }
     },
 
     startGame() {
