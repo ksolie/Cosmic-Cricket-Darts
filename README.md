@@ -15,3 +15,7 @@ Uses JavaScript Object Literal Pattern.
 jQuery used for UI updates due to the tediousness of searching for DOM children. 
 
 <img src="https://media.giphy.com/media/55d5go2p1e6f7SnEXK/giphy.gif">
+
+How to create your own dartboard arcade using this software:
+
+Supplies: 1 Rasperry Pi, Cork Dartboard, 1 Monitor 
