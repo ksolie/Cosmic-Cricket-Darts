@@ -235,6 +235,13 @@ const app = {
             this.nextPlayer();
         }
         this.targetValuePressed = false;
+
+        // After a miss or dart throw, we must take a snapshot of the current game standings for use with the 'undo' feature
+        // Since objects are assigned by reference, let's use JSON to skirt this issue. 
+
+        let currentGameStats = JSON.stringify(this.players);
+        this.previousScores.push(currentGameStats);
+        console.log(this.previousScores)
     },
     
     nextPlayer() {
@@ -297,24 +304,6 @@ const app = {
         audio.play();
         this.onDartScore();
     },
-
-
-    goBack() {
-        // create an array that you push to, probably 5 long. 
-        // once it reaches 5, start removing the first item in the array after pushing on the new item
-        // they will just be objects with "snapshots" of the game information 
-        // if you go back, just replace the score values, current player value, throws left value
-
-        // Call this.updateDartboardView();
-        // Pass in "snapshot" of game 
-
-        // update player turn, # of darts thrown, all player scores, 
-        // UI: scores, closed out, last darts thrown, player turn 
-        // if I coded it good enough, I should just be able to run functions to do all this
-
-        // It's like i'm doing memory management 
-    },
-
 
 
     checkWin() {
@@ -393,6 +382,16 @@ const app = {
         // reload scores here
 
 
+      this.players = JSON.parse(this.previousScores[(this.previousScores.length - 2)]);
+      console.log(this.players)
+      this.previousScores.splice(-1,1) // very important to remove from array 
+      console.log(this.previousScores)
+      console.log(this.players)
+
+      // need to update the scores UI
+      // need to keep track of previous dart value in array as well, slice it as well. 
+      // for a miss, we'll avoid all of this
+
       this.updateDartboardView(this.dartValue, this.currentPlayer, this.players[this.currentPlayer][this.dartValue]);
       this.updateActivePlayerCSS();
 
@@ -413,6 +412,8 @@ const app = {
 
         console.log('game started')
         console.log(this.numberOfPlayers)
+
+        this.previousScores.push(JSON.stringify(this.players));
     },
 
     setupInitialViewCSS() {
