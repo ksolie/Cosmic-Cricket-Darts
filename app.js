@@ -444,6 +444,12 @@ const app = {
         console.log(this.numberOfPlayers)
 
         this.previousScores.push(JSON.stringify(this.players));
+
+        $('#main-logo').addClass("flicker");
+        setTimeout(() => {
+            var audio = new Audio('./sounds/sizzle.wav');
+            audio.play(); 
+        }, 250)
     },
 
     setupInitialViewCSS() {
@@ -492,10 +498,7 @@ const app = {
     },
   
     init() {
-        setTimeout(() => {
-            var audio = new Audio('./sounds/sizzle.wav');
-            audio.play(); 
-        }, 250)
+
   
       this.cacheDOM();
       this.bindEvents();
