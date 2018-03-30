@@ -9,7 +9,7 @@
 
 
         <!-- Player Select Modal -->
-        <div class="player-select hidden">
+        <div class="player-select">
             <img src="images/logo.svg" style="width: 400px; padding-top: 50px;" class="center-block text-align">
             <h2>Select Number of Players</h2>
             <h1 class="player-select-num">1</h1>
@@ -32,7 +32,7 @@
                     <p id="player-1" class="score">0</p>
                 </div>
                 <div class="col-xs-6 text-center">
-                    <img class="logo" src="images/logo.svg">
+                    <object data="images/logo.svg" type="image/svg+xml" class="logo" id="main-logo"></object>
                 </div>
                 <div class="col-xs-3 player-box" id="player-box-2">
                         <h1>Player 2</h1>
@@ -107,11 +107,11 @@
                             <td><span></span></td>
                         </tr>
                     </table>
-                    <table class="previous-throw-info">
+                    <!-- <table class="previous-throw-info">
                         <td>Triple 20</td>
                         <td>Miss</td>
                         <td>Double Bull</td>
-                    </table>
+                    </table> -->
                 </div>               
                 <div class="col-xs-3 player-box" id="player-box-4">
                         <h1>Player 4</h1>
@@ -135,6 +135,7 @@
                 <button class="btn btn-small btn-primary" id="miss">Miss</button>
                 <button class="btn btn-small btn-primary" id="playerSelection"># of Players</button>
                 <button class="btn btn-small btn-primary" id="start-game-button">Start</button>
+                <button class="btn btn-small btn-primary" id="undo-button">Undo</button>
             </div>
 
 
