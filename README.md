@@ -22,4 +22,4 @@ Supplies: 1 Rasperry Pi, Cork Dartboard, 1 Monitor
 
 Final Product: 
 
-<img src="https://i.imgur.com/ZpFZ6Ow.jpg">
+<img style="width: 300px" src="https://i.imgur.com/ZpFZ6Ow.jpg">
