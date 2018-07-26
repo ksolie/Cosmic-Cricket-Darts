@@ -2,7 +2,7 @@
 
 GUI and logic for the popular darts game "Cricket." 
 
-This web app is used in conjunction with a Raspberry Pi and physical buttons for a arcade-like experience. 
+This web app is used in conjunction with a Raspberry Pi and physical buttons for an arcade-like experience. 
 
 The physical buttons connected to the Pi use Java to fire keyboard events. 
 
