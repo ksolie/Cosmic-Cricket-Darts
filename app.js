@@ -484,27 +484,27 @@ const app = {
 
     keyBoardEvents(e) {
         switch(e.keyCode) {
-            case 98: 
+            case 48: 
                 console.log('2 key pressed') // twenty
                 this.onTwenty();
                 break;
-            case 105: 
+            case 57: 
                 console.log('9 key pressed') // nineteen
                 this.onNineteen();
                 break;
-            case 104: 
+            case 56: 
                 console.log('8 key pressed') // eighteen 
                 this.onEighteen();
                 break;
-            case 103: 
+            case 55: 
                 console.log('7 key pressed') // seventeen
                 this.onSeventeen();
                 break;
-            case 102: 
+            case 54: 
                 console.log('6 key pressed') // sixteen
                 this.onSixteen();
                 break;
-            case 101: 
+            case 53: 
                 console.log('5 key pressed') // fifteen
                 this.onFifteen(); 
                 break;
@@ -512,15 +512,15 @@ const app = {
                 console.log('B key pressed') // bullseye
                 this.onBull();
                 break;
-            case 84:
+            case 51:
                 console.log('T key pressed'); // triple
                 this.onTriple();
                 break;
-            case 68:
+            case 50:
                 console.log('D key pressed'); // double 
                 this.onDouble();
                 break;
-            case 83:
+            case 49:
                 console.log('S key pressed'); // single
                 this.onSingle(); 
                 break;
@@ -532,7 +532,7 @@ const app = {
                 console.log('M key pressed') // miss
                 this.onDartMiss();
                 break;
-            case 85: 
+            case 8: 
                 console.log('U key pressed') // undo
                 this.onUndoModal();
                 break;
